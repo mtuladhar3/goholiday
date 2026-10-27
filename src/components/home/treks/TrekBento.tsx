@@ -1,0 +1,32 @@
+import { popularTreks } from "@/data/trips";
+import Section from "@/components/ui/Section";
+import SectionHeader from "@/components/ui/SectionHeader";
+import Reveal from "@/components/animations/Reveal";
+import TripOfTheMonth from "./TripOfTheMonth";
+import TrekTile from "./TrekTile";
+import TrekFinder from "./TrekFinder";
+
+export default function TrekBento() {
+  return (
+    <Section id="treks">
+      <SectionHeader
+        label="Popular treks"
+        title={"Chosen by\n*thousands*"}
+        description="Our most-booked routes this season, plus one journey we can't stop talking about."
+        action={{ href: "#trips", label: "All treks" }}
+      />
+
+      <Reveal className="mt-14 grid gap-4 lg:grid-cols-12" stagger={0.12}>
+        <div className="lg:col-span-7">
+          <TripOfTheMonth />
+        </div>
+        <div className="flex flex-col gap-4 lg:col-span-5">
+          {popularTreks.map((trek) => (
+            <TrekTile key={trek.slug} trek={trek} />
+          ))}
+          <TrekFinder />
+        </div>
+      </Reveal>
+    </Section>
+  );
+}
