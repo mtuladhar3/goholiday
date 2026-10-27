@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { lenisRef } from "@/lib/lenis";
 import { navLinks, site, socials } from "@/data/site";
@@ -12,6 +12,13 @@ export default function MenuOverlay({ open, onClose }: MenuOverlayProps) {
   const ref = useRef<HTMLDivElement>(null);
   const tl = useRef<gsap.core.Timeline>(null);
   const [openItem, setOpenItem] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = previous; };
+  }, [open]);
 
   useGSAP(
     () => {

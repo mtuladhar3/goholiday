@@ -28,19 +28,32 @@ export default function Reveal({
   const ref = useRef<HTMLDivElement>(null);
 
   useGSAP(
-    () => {
+    (_, contextSafe) => {
       const el = ref.current;
       if (!el) return;
-      const targets = selector ? el.querySelectorAll(selector) : el.children;
       gsap.matchMedia().add(MOTION_OK, () => {
-        gsap.from(targets, {
-          ...from,
-          duration: 1.1,
-          ease: "power4.out",
-          stagger,
-          delay,
-          scrollTrigger: { trigger: el, start, once: true },
-        });
+        let tween: gsap.core.Tween | undefined;
+        const reveal = () => {
+          tween = gsap.from(selector ? el.querySelectorAll(selector) : el.children, {
+            ...from,
+            duration: 1.1,
+            ease: "power4.out",
+            stagger,
+            delay,
+            scrollTrigger: { trigger: el, start, once: true },
+          });
+        };
+        const animate = contextSafe ? contextSafe(reveal) : reveal;
+        const observer = new IntersectionObserver((entries) => {
+          if (!entries.some((entry) => entry.isIntersecting)) return;
+          observer.disconnect();
+          animate();
+        }, { rootMargin: "300px 0px" });
+        observer.observe(el);
+        return () => {
+          observer.disconnect();
+          tween?.revert();
+        };
       });
     },
     { scope: ref },

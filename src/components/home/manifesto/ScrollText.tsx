@@ -22,7 +22,12 @@ export default function ScrollText({ text, images = {}, className = "" }: Scroll
     () => {
       gsap.matchMedia().add(MOTION_OK, () => {
         const scrollTrigger = { trigger: ref.current, start: "top 80%", end: "bottom 45%", scrub: true };
-        gsap.fromTo(".st-word", { opacity: 0.12 }, { opacity: 1, stagger: 0.1, ease: "none", scrollTrigger });
+        // Keep words readable throughout the scroll animation.
+        gsap.fromTo(
+          ".st-word",
+          { color: "var(--color-stone)" },
+          { color: "var(--color-ink)", stagger: 0.1, ease: "none", scrollTrigger },
+        );
         gsap.from(".st-pill", { width: 0, ease: "none", stagger: 0.3, scrollTrigger: { ...scrollTrigger, end: "center 50%" } });
       });
     },

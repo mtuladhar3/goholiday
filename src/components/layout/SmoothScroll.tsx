@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import Lenis from "lenis";
+import type Lenis from "lenis";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { lenisRef } from "@/lib/lenis";
 import { onIntro } from "@/lib/intro";
@@ -9,22 +9,39 @@ import { onIntro } from "@/lib/intro";
 /** Lenis smooth scrolling, driven by GSAP's ticker so ScrollTrigger stays in sync. */
 export default function SmoothScroll() {
   useEffect(() => {
-    const lenis = new Lenis({ lerp: 0.09, anchors: { offset: -24 }, autoRaf: false, respectReducedMotion: true });
-    lenisRef.current = lenis;
-    lenis.on("scroll", ScrollTrigger.update);
-    const tick = (time: number) => lenis.raf(time * 1000);
-    gsap.ticker.add(tick);
-    gsap.ticker.lagSmoothing(0);
+    // Touch devices and reduced-motion users keep native scrolling.
+    const media = window.matchMedia("(pointer: fine) and (prefers-reduced-motion: no-preference)");
+    let disposed = false;
+    let lenis: Lenis | undefined;
+    const tick = (time: number) => lenis?.raf(time * 1000);
 
-    // Hold the page still while the preloader plays.
-    lenis.stop();
-    const offIntro = onIntro(() => lenis.start());
+    const stop = () => {
+      gsap.ticker.remove(tick);
+      lenis?.destroy();
+      if (lenisRef.current === lenis) lenisRef.current = null;
+      lenis = undefined;
+    };
+    const start = async () => {
+      if (!media.matches || lenis) return;
+      const { default: Lenis } = await import("lenis");
+      if (disposed || !media.matches || lenis) return;
+      lenis = new Lenis({ lerp: 0.09, anchors: { offset: -24 }, autoRaf: false, respectReducedMotion: true });
+      lenisRef.current = lenis;
+      lenis.on("scroll", ScrollTrigger.update);
+      gsap.ticker.add(tick);
+    };
+    const offIntro = onIntro(() => { void start(); });
+    const change = () => {
+      stop();
+      if (document.documentElement.dataset.intro === "done") void start();
+    };
+    media.addEventListener("change", change);
 
     return () => {
+      disposed = true;
       offIntro();
-      gsap.ticker.remove(tick);
-      lenis.destroy();
-      lenisRef.current = null;
+      media.removeEventListener("change", change);
+      stop();
     };
   }, []);
 

@@ -27,6 +27,7 @@ export default function Preloader() {
 
       const num = ref.current?.querySelector(".pl-num");
       const counter = { v: 0 };
+      let lastUpdate = -Infinity;
 
       gsap
         .timeline({
@@ -38,7 +39,14 @@ export default function Preloader() {
           duration: 2,
           ease: "power3.inOut",
           onUpdate: () => {
-            if (num) num.textContent = Math.round(counter.v).toLocaleString("en-US");
+            const now = performance.now();
+            if (num && now - lastUpdate >= 100) {
+              num.textContent = Math.round(counter.v).toLocaleString("en-US");
+              lastUpdate = now;
+            }
+          },
+          onComplete: () => {
+            if (num) num.textContent = SUMMIT.toLocaleString("en-US");
           },
         }, 0.2)
         .to(".pl-bar", { scaleX: 1, duration: 2, ease: "power3.inOut" }, 0.2)
@@ -63,7 +71,7 @@ export default function Preloader() {
 
       <div className="overflow-hidden">
         <div className="pl-line flex items-end gap-3">
-          <span className="pl-num text-[22vw] font-medium leading-[0.8] tracking-[-0.06em] tabular-nums sm:text-[16vw]">0</span>
+          <span className="pl-num inline-block min-w-[4.5ch] text-[22vw] font-medium leading-[0.8] tracking-[-0.06em] tabular-nums sm:text-[16vw]">0</span>
           <span className="mb-[1.5vw] font-serif text-3xl italic sm:text-5xl">m</span>
         </div>
       </div>

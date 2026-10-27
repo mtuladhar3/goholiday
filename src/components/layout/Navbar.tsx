@@ -1,17 +1,19 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import { gsap, useGSAP, ScrollTrigger } from "@/lib/gsap";
 import { onIntro } from "@/lib/intro";
 import { navLinks } from "@/data/site";
 import Button from "@/components/ui/Button";
 import { ArrowUpRight, ChevronDown } from "@/components/ui/Icons";
 import Logo from "./Logo";
-import MenuOverlay from "./MenuOverlay";
+const MenuOverlay = dynamic(() => import("./MenuOverlay"), { ssr: false });
 
 export default function Navbar() {
   const ref = useRef<HTMLElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [menuLoaded, setMenuLoaded] = useState(false);
   const menuOpenRef = useRef(false);
 
   useEffect(() => {
@@ -108,7 +110,10 @@ export default function Navbar() {
             </Button>
             <button
               type="button"
-              onClick={() => setMenuOpen((o) => !o)}
+              onClick={() => {
+                setMenuLoaded(true);
+                setMenuOpen((o) => !o);
+              }}
               aria-expanded={menuOpen}
               aria-label={menuOpen ? "Close menu" : "Open menu"}
               className={`grid size-12 place-items-center rounded-full transition-colors xl:hidden ${menuOpen ? "bg-paper text-ink" : "glass-light"}`}
@@ -121,7 +126,7 @@ export default function Navbar() {
           </div>
         </div>
       </header>
-      <MenuOverlay open={menuOpen} onClose={() => setMenuOpen(false)} />
+      {menuLoaded && <MenuOverlay open={menuOpen} onClose={() => setMenuOpen(false)} />}
     </>
   );
 }
