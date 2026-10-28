@@ -75,7 +75,7 @@ export default function FeaturedTrips() {
       <div className="no-scrollbar mt-14 snap-x snap-mandatory overflow-x-auto scroll-pl-4 sm:scroll-pl-8 lg:mt-10 lg:overflow-visible">
         <div ref={rail} className="flex w-max gap-4 px-4 sm:gap-6 sm:px-8">
           {featuredTrips.map((trip) => (
-            <TripCard key={trip.slug} trip={trip} />
+            <TripCard key={trip.slug} trip={trip} heading="h2" />
           ))}
           <Link
             href="#plan"

@@ -147,7 +147,8 @@ export default function HeroSlider() {
             </h2>
 
             <p className="hs-swap mt-6 max-w-lg text-base leading-relaxed text-white/80 sm:text-lg">{slide.description}</p>
-            <div className="hs-swap mt-8 flex flex-wrap gap-3">
+            {/* Kept out of the slide fade: the buttons are the same on every slide and must stay fully opaque for contrast. */}
+            <div className="mt-8 flex flex-wrap gap-3">
               <Button href={slide.href} variant="saffron">
                 Plan this trip
               </Button>

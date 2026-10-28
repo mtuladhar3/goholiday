@@ -4,7 +4,8 @@ import type { Trip } from "@/data/trips";
 import { tripHref } from "@/data/tours";
 import { ArrowUpRight, MapPin } from "./Icons";
 
-export default function TripCard({ trip }: { trip: Trip }) {
+/** `heading` sets the title level so cards fit the page outline (h2 directly under the page h1, h3 under a section h2). */
+export default function TripCard({ trip, heading: Heading = "h3" }: { trip: Trip; heading?: "h2" | "h3" }) {
   return (
     <Link
       href={tripHref(trip.slug)}
@@ -34,7 +35,7 @@ export default function TripCard({ trip }: { trip: Trip }) {
             {trip.location} · {trip.maxAltitude.toLocaleString("en-US")} m
           </p>
           <div className="mt-1.5 flex items-center justify-between gap-3">
-            <h3 className="text-xl font-medium leading-tight tracking-tight">{trip.title}</h3>
+            <Heading className="text-xl font-medium leading-tight tracking-tight">{trip.title}</Heading>
             <span className="grid size-10 shrink-0 place-items-center rounded-full bg-white text-ink transition-all duration-500 ease-expo group-hover:rotate-45 group-hover:bg-navy group-hover:text-white">
               <ArrowUpRight className="size-4" />
             </span>
