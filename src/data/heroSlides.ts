@@ -1,4 +1,5 @@
 import { images } from "./images";
+import { findTour, tourHref } from "./tours";
 
 export type HeroSlide = {
   /** Short name used in the slider navigation. */
@@ -14,60 +15,54 @@ export type HeroSlide = {
   href: string;
 };
 
+type SlideCopy = Pick<HeroSlide, "name" | "location" | "title" | "description" | "image"> & { tour: string };
+
+/** Days, altitude, price and link come from the tour itself so the slide never drifts from the tour page. */
+const slide = ({ tour: slug, ...copy }: SlideCopy): HeroSlide => {
+  const tour = findTour(slug);
+  if (!tour) throw new Error(`Unknown tour: ${slug}`);
+  return { ...copy, days: tour.days, altitude: tour.maxAltitude, price: tour.price, href: tourHref(tour) };
+};
+
 export const heroSlides: HeroSlide[] = [
-  {
-    name: "Everest",
-    location: "Khumbu, Nepal",
-    title: "Walk where the *sky* begins",
-    description: "Fourteen days through Sherpa villages and rhododendron forests to the foot of the world's highest mountain.",
-    image: images.everestStupa,
-    days: 14,
-    altitude: 5545,
-    price: 1450,
-    href: "#plan",
-  },
   {
     name: "Kailash",
     location: "Western Tibet",
     title: "Circle the *sacred* mountain",
-    description: "A pilgrim's kora around Mt. Kailash and the turquoise stillness of Lake Manasarovar.",
+    description: "The three-day kora around Mt. Kailash, over the 5,630 m Dolma La with yak and porter support.",
     image: images.sunsetPeaks,
-    days: 10,
-    altitude: 5630,
-    price: 2650,
-    href: "#plan",
+    tour: "kailash-mansarovar-overland-tour",
   },
   {
-    name: "Annapurna",
-    location: "Mardi Himal, Nepal",
-    title: "Chase above the *clouds*",
-    description: "A wild ridge walk with front-row views of Machhapuchhre, prayer flags snapping in the wind.",
+    name: "Manasarovar",
+    location: "Western Tibet",
+    title: "Bathe in the *holy* lake",
+    description: "Sunrise puja and parikrama on the turquoise shores of Lake Manasarovar, reached by helicopter in days.",
     image: images.prayerFlags,
-    days: 7,
-    altitude: 4500,
-    price: 690,
-    href: "#plan",
+    tour: "kailash-mansarovar-yatra-by-helicopter",
+  },
+  {
+    name: "Lhasa",
+    location: "Central Tibet",
+    title: "Rise to the *roof* of the world",
+    description: "The Potala Palace, the Jokhang Temple and pilgrims circling the Barkhor at dusk.",
+    image: images.prayerWheels,
+    tour: "lhasa-city-tour",
+  },
+  {
+    name: "Everest North",
+    location: "Tingri, Tibet",
+    title: "See Everest from the *north*",
+    description: "Overland from Kathmandu across high passes to Rongbuk and the quiet north face of Chomolungma.",
+    image: images.amaDablam,
+    tour: "kathmandu-lhasa-overland-ebc",
   },
   {
     name: "Kathmandu",
-    location: "Kathmandu Valley, Nepal",
-    title: "Where every stone *prays*",
-    description: "Seven UNESCO sites, hidden courtyards and the living culture of an ancient valley.",
+    location: "Gateway to Tibet",
+    title: "Where every *yatra* begins",
+    description: "Every Kailash and Tibet journey starts here — stupas, old courtyards and a day to rest before the plateau.",
     image: images.swayambhu,
-    days: 4,
-    altitude: 1400,
-    price: 420,
-    href: "#plan",
+    tour: "kathmandu-heritage-tour",
   },
-  {
-    name: "Pokhara",
-    location: "Phewa Lake, Nepal",
-    title: "Slow down by the *lake*",
-    description: "Sunrise at Sarangkot, paddling on Phewa and paragliding over the valley.",
-    image: images.phewaLake,
-    days: 5,
-    altitude: 1600,
-    price: 380,
-    href: "#plan",
-  },
-];
+].map(slide);

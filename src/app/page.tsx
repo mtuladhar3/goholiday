@@ -2,7 +2,7 @@ import SiteShell from "@/components/layout/SiteShell";
 import HeroSlider from "@/components/home/hero/HeroSlider";
 import Destinations from "@/components/home/destinations/Destinations";
 import TripSearch from "@/components/home/TripSearch";
-import DestinationMarquee from "@/components/home/DestinationMarquee";
+import MostBooked from "@/components/home/MostBooked";
 import FeaturedTrips from "@/components/home/trips/FeaturedTrips";
 import Experiences from "@/components/home/experiences/Experiences";
 import TrekBento from "@/components/home/treks/TrekBento";
@@ -16,7 +16,6 @@ export default function Home() {
     <SiteShell>
       <HeroSlider />
       <TripSearch />
-      <DestinationMarquee />
       <Destinations />
       <FeaturedTrips />
       <Experiences />
@@ -25,6 +24,7 @@ export default function Home() {
       <Journal />
       <ExpertCTA />
       <Testimonials />
+      <MostBooked />
     </SiteShell>
   );
 }

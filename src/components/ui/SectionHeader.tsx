@@ -13,10 +13,12 @@ type SectionHeaderProps = {
   /** Extra content shown on the right, above the action. */
   aside?: ReactNode;
   tone?: "light" | "dark";
+  /** Heading level for the title; pass "h1" for the one section that carries the page's main heading. */
+  as?: "h1" | "h2";
 };
 
 /** The one header layout used by every section: label + title left, copy + action right. */
-export default function SectionHeader({ label, title, description, action, aside, tone = "light" }: SectionHeaderProps) {
+export default function SectionHeader({ label, title, description, action, aside, tone = "light", as = "h2" }: SectionHeaderProps) {
   const muted = tone === "dark" ? "text-paper/60" : "text-stone";
   return (
     <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
@@ -24,7 +26,7 @@ export default function SectionHeader({ label, title, description, action, aside
         <SectionLabel className={tone === "dark" ? "text-paper/70" : ""}>
           {label}
         </SectionLabel>
-        <SplitReveal text={title} className="type-display mt-5" />
+        <SplitReveal as={as} text={title} className="type-display mt-5" />
       </div>
       {(description || action || aside) && (
         <Reveal className="flex max-w-sm flex-col items-start gap-6 md:pb-2" stagger={0.08}>

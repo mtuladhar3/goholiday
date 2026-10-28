@@ -10,7 +10,6 @@ export default function TripOfTheMonth() {
     { label: "Duration", value: `${trip.days} days` },
     { label: "Max altitude", value: `${trip.maxAltitude.toLocaleString("en-US")} m` },
     { label: "Difficulty", value: trip.difficulty },
-    { label: "From", value: `$${trip.price.toLocaleString("en-US")}` },
   ];
 
   return (
@@ -32,9 +31,9 @@ export default function TripOfTheMonth() {
           </div>
         </div>
 
-        <dl className="grid grid-cols-2 border-y border-paper/10 sm:grid-cols-4">
+        <dl className="grid grid-cols-3 border-y border-paper/10">
           {stats.map((s, i) => (
-            <div key={s.label} className={`py-4 ${i % 2 ? "pl-4" : ""} sm:pl-4 sm:first:pl-0 ${i ? "sm:border-l sm:border-paper/10" : ""}`}>
+            <div key={s.label} className={`py-4 ${i ? "border-l border-paper/10 pl-4" : ""}`}>
               <dt className="type-eyebrow text-paper/50">{s.label}</dt>
               <dd className="mt-1 text-lg font-medium">{s.value}</dd>
             </div>

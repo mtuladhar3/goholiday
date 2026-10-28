@@ -52,7 +52,7 @@ export default function SectionNav({ items }: { items: { id: string; label: stri
         visible ? "opacity-100" : "-translate-y-full opacity-0"
       } ${visible && underNavbar ? "translate-y-28 sm:translate-y-32" : visible ? "translate-y-3 sm:translate-y-4" : ""}`}
     >
-      <ul className={`no-scrollbar glass-light flex max-w-full gap-1 overflow-x-auto rounded-full p-1.5 ${visible ? "pointer-events-auto" : ""}`}>
+      <ul className={`no-scrollbar flex border border-ink/8 bg-white shadow-sm shadow-ink/5 max-w-full gap-1 overflow-x-auto rounded-full p-1.5 ${visible ? "pointer-events-auto" : ""}`}>
         {items.map(({ id, label }) => (
           <li key={id} className="shrink-0">
             <a

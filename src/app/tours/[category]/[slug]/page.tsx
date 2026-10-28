@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense, type ReactNode } from "react";
 import { notFound } from "next/navigation";
-import { categoryHref, departuresFor, galleryFor, getCategory, getTour, routeProfile, tours, toursIn } from "@/data/tours";
+import { categoryHref, departuresFor, getCategory, getTour, overviewFor, routeProfile, tours, toursIn } from "@/data/tours";
 import { reviews } from "@/data/reviews";
 import SiteShell from "@/components/layout/SiteShell";
 import Container from "@/components/ui/Container";
@@ -20,7 +20,8 @@ import TourFacts from "@/components/tours/detail/TourFacts";
 import SectionNav from "@/components/tours/detail/SectionNav";
 import Itinerary from "@/components/tours/detail/Itinerary";
 import Inclusions from "@/components/tours/detail/Inclusions";
-import { BookingCard, BookingProvider, DepartureList, MobileBookingBar } from "@/components/tours/detail/Booking";
+import { BookingCard, BookingProvider, MobileBookingBar } from "@/components/tours/detail/Booking";
+import RichText from "@/components/ui/RichText";
 
 type Params = PageProps<"/tours/[category]/[slug]">["params"];
 
@@ -47,8 +48,9 @@ export default function TourPage({ params }: PageProps<"/tours/[category]/[slug]
 
 const sections = [
   { id: "overview", label: "Overview" },
+  { id: "highlights", label: "Highlights" },
   { id: "itinerary", label: "Itinerary" },
-  { id: "dates", label: "Dates & prices" },
+  { id: "essentials", label: "Essential info" },
   { id: "inclusions", label: "Inclusions" },
   { id: "faqs", label: "FAQs" },
 ];
@@ -74,14 +76,18 @@ async function TourContent({ params }: { params: Params }) {
   const similar = (related.length >= 3 ? related : [...related, ...tours.filter((t) => t.category !== category.slug)]).slice(0, 3);
 
   return (
-    <BookingProvider departures={departuresFor(tour)} basePrice={tour.price}>
+    <BookingProvider departures={departuresFor(tour)}>
       <TourHero tour={tour} category={category} />
 
       <Container className="mt-10 grid gap-12 pb-16 lg:grid-cols-[minmax(0,1fr)_380px] lg:gap-16 lg:pb-20">
         <div className="grid min-w-0 gap-12 lg:gap-14">
           <TourFacts tour={tour} category={category} />
 
-          <Block id="overview" label="Overview" title="Why you'll *love* it">
+          <Block id="overview" label="Overview" title="About this *journey*">
+            <RichText html={overviewFor(tour)} />
+          </Block>
+
+          <Block id="highlights" label="Highlights" title="Why you'll *love* it">
             <ul className="grid gap-3 sm:grid-cols-2">
               {tour.highlights.map((h) => (
                 <li key={h} className="flex items-start gap-3 rounded-card border border-mist bg-white p-4">
@@ -104,18 +110,11 @@ async function TourContent({ params }: { params: Params }) {
           </Block>
 
           <Block id="itinerary" label="Itinerary" title="Day by *day*">
-            <Itinerary days={tour.itinerary} photos={galleryFor(tour)} />
+            <Itinerary days={tour.itinerary} />
           </Block>
 
-          <Block id="dates" label="Dates & prices" title="Upcoming *departures*">
-            <DepartureList />
-            <p className="mt-4 text-sm text-stone">
-              Prices are per person, twin sharing. None of these suit?{" "}
-              <a href="#plan" className="font-medium text-navy underline underline-offset-4 hover:text-saffron">
-                Ask for private dates
-              </a>
-              .
-            </p>
+          <Block id="essentials" label="Essential info" title="Before you *go*">
+            <RichText html={category.essentials} />
           </Block>
 
           <Block id="inclusions" label="Inclusions" title="What's *covered*">

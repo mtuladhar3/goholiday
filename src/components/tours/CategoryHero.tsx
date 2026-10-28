@@ -1,6 +1,6 @@
 import Image from "next/image";
 import type { Tour, TourCategory } from "@/data/tours";
-import { monthRange, metres, usd } from "@/lib/format";
+import { monthRange, metres } from "@/lib/format";
 import SplitReveal from "@/components/animations/SplitReveal";
 import Container from "@/components/ui/Container";
 import Breadcrumbs from "./Breadcrumbs";
@@ -9,7 +9,7 @@ export default function CategoryHero({ category, tours }: { category: TourCatego
   const days = tours.map((t) => t.days);
   const stats = [
     { label: "Journeys", value: String(tours.length) },
-    { label: "From", value: usd(Math.min(...tours.map((t) => t.price))) },
+    { label: "Avg. rating", value: `${(tours.reduce((sum, t) => sum + t.rating, 0) / tours.length).toFixed(1)} / 5` },
     { label: "Duration", value: `${Math.min(...days)} – ${Math.max(...days)} days` },
     { label: "Highest point", value: metres(Math.max(...tours.map((t) => t.maxAltitude))) },
   ];

@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { gsap, useGSAP, ScrollTrigger } from "@/lib/gsap";
-import { onIntro } from "@/lib/intro";
 import { navLinks } from "@/data/site";
 import Button from "@/components/ui/Button";
 import { ArrowUpRight, ChevronDown } from "@/components/ui/Icons";
@@ -28,8 +27,7 @@ export default function Navbar() {
 
   useGSAP(
     () => {
-      const intro = gsap.from(".nav-item", { y: -24, autoAlpha: 0, duration: 1, stagger: 0.08, ease: "power4.out", paused: true });
-      const off = onIntro(() => intro.play());
+      gsap.from(".nav-item", { y: -24, autoAlpha: 0, duration: 1, stagger: 0.08, ease: "power4.out" });
 
       // Tuck the bar away while scrolling down, bring it back on scroll up.
       const hide = ScrollTrigger.create({
@@ -40,10 +38,7 @@ export default function Navbar() {
           gsap.to(ref.current, { yPercent: hidden ? -130 : 0, duration: 0.5, ease: "power3.out", overwrite: "auto" });
         },
       });
-      return () => {
-        off();
-        hide.kill();
-      };
+      return () => hide.kill();
     },
     { scope: ref },
   );
@@ -56,7 +51,7 @@ export default function Navbar() {
             <Logo />
           </div>
 
-          <nav className="nav-item glass-light relative hidden items-center gap-0.5 rounded-full p-1.5 xl:flex">
+          <nav className="nav-item relative border border-ink/8 bg-white shadow-sm shadow-ink/5 hidden items-center gap-0.5 rounded-full p-1.5 xl:flex">
             {navLinks.map((link, i) => {
               if (!link.children) {
                 return (
@@ -90,7 +85,7 @@ export default function Navbar() {
                         <li key={child.label}>
                           <a
                             href={child.href}
-                            className="group/item flex items-center justify-between gap-3 rounded-thumb px-4 py-3 text-sm transition-colors hover:bg-navy/5 hover:text-navy"
+                            className="group/item flex items-center justify-between gap-3 rounded-thumb px-4 py-3 text-sm transition-colors hover:text-navy"
                           >
                             {child.label}
                             <ArrowUpRight className="size-3.5 shrink-0 -translate-x-1 opacity-0 transition-[opacity,translate] duration-300 group-hover/item:translate-x-0 group-hover/item:opacity-100" />
@@ -116,7 +111,7 @@ export default function Navbar() {
               }}
               aria-expanded={menuOpen}
               aria-label={menuOpen ? "Close menu" : "Open menu"}
-              className={`grid size-12 place-items-center rounded-full transition-colors xl:hidden ${menuOpen ? "bg-paper text-ink" : "glass-light"}`}
+              className={`grid size-12 place-items-center rounded-full transition-colors xl:hidden ${menuOpen ? "bg-paper text-ink" : "border border-ink/8 bg-white shadow-sm shadow-ink/5"}`}
             >
               <span className="relative block h-3 w-5">
                 <span className={`absolute left-0 top-0 h-0.5 w-full rounded bg-current transition-transform duration-500 ease-expo ${menuOpen ? "translate-y-[5px] rotate-45" : ""}`} />

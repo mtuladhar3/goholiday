@@ -12,8 +12,8 @@ export default function Journal() {
     <Section id="journal">
       <SectionHeader
         label="Blogs & updates"
-        title={"From the\n*journal*"}
-        description="Field notes, planning guides and stories from the trail, written by our guides."
+        title={"Notes from\nthe *plateau*"}
+        description="Permit guides, kora tips and stories from Tibet, written by the guides who lead our journeys."
         action={{ href: "#journal", label: "All stories" }}
       />
 

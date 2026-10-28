@@ -37,7 +37,7 @@ export default function ExpertCTA() {
               <div className="arch relative aspect-[4/5] overflow-hidden rounded-t-full" style={{ clipPath: "inset(0% 0% 0% 0% round 999px 999px 0 0)" }}>
                 <Image src={expert.image} alt={expert.name} fill sizes="(min-width: 1024px) 26vw, 90vw" className="object-cover" />
               </div>
-              <RotatingBadge text="Talk to a local expert • Plan with us • " href={`tel:${site.whatsapp}`} className="expert-fade absolute -bottom-6 -right-4 sm:-right-10" />
+              <RotatingBadge text="Talk to a Kailash expert • Plan with us • " href={`tel:${site.whatsapp}`} className="expert-fade absolute -bottom-6 -right-4 sm:-right-10" />
             </div>
             <div className="expert-fade max-w-sm">
               <blockquote className="leading-relaxed text-paper/75">“{expert.quote}”</blockquote>
@@ -60,9 +60,9 @@ export default function ExpertCTA() {
             <SectionLabel className="expert-fade text-paper/70">
               Plan with us
             </SectionLabel>
-            <SplitReveal text={"Plan your trip with\na *local expert*"} className="type-display mt-5" />
+            <SplitReveal text={"Plan your Kailash yatra\nwith a *local expert*"} className="type-display mt-5" />
             <p className="expert-fade mt-6 max-w-lg text-paper/60">
-              Share a few details and we&apos;ll design a journey around your dates, pace and budget — free, with no obligation.
+              Share a few details and we&apos;ll plan your Kailash or Tibet journey around your dates, pace and permits — free, with no obligation.
             </p>
             <div className="expert-fade mt-10">
               <EnquiryForm />

@@ -131,18 +131,23 @@ export default function Footer() {
           <p>
             © {site.copyrightYear} {site.name}. All rights reserved.
           </p>
-          <p>{site.coordinates} — Kathmandu, Nepal</p>
+          <p>
+            Developed by{" "}
+            <a href="https://webtech.com.np" target="_blank" rel="noopener" className="text-paper underline underline-offset-4 transition-colors hover:text-saffron">
+              Webtech Nepal
+            </a>
+          </p>
         </div>
       </Container>
 
       <Reveal
-        className="mt-6 flex select-none justify-center overflow-hidden leading-[0.78]"
+        className="mt-6 flex select-none justify-center overflow-hidden leading-none"
         selector=".wm-letter"
-        from={{ yPercent: 100 }}
+        from={{ yPercent: 110 }}
         stagger={0.04}
         start="top 98%"
       >
-        <p aria-hidden className="flex text-[22vw] font-semibold tracking-[-0.07em] text-paper">
+        <p aria-hidden className="flex text-[18vw] font-semibold tracking-[-0.07em] text-paper">
           {site.name.split("").map((ch, i) => (
             <span key={i} className="wm-letter inline-block">
               {ch}

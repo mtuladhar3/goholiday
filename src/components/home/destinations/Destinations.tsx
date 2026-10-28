@@ -17,8 +17,8 @@ export default function Destinations() {
     <Section id="destinations">
       <SectionHeader
         label="Destinations"
-        title={"Three kingdoms,\n*one* Himalaya"}
-        description="From Everest's south face to the monasteries of Paro — pick a country and we'll handle the permits and borders."
+        title={"Kailash, Tibet\n& the *Himalaya*"}
+        description="From the sacred kora to the Potala Palace — every border, permit and high pass handled by one local team."
         action={{ href: "#trips", label: "Browse journeys" }}
       />
 

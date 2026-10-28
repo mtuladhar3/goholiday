@@ -16,8 +16,8 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "GoHoliday — Himalayan Journeys",
-  description: "Treks, tours and overland journeys across Nepal, Tibet and Bhutan, planned by local experts.",
+  title: "GoHoliday — Kailash & Tibet Tours",
+  description: "Kailash Mansarovar yatras, Tibet tours and overland journeys from Kathmandu, planned by local experts.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

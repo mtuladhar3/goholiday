@@ -1,4 +1,5 @@
 import { images } from "./images";
+import { categoryHref } from "./tours";
 
 export type Experience = {
   title: string;
@@ -9,10 +10,10 @@ export type Experience = {
 };
 
 export const experiences: Experience[] = [
-  { title: "Overland Tours", blurb: "Cross borders by road over high passes, past nomad camps and turquoise lakes.", tags: ["Tibet", "Bhutan", "Road trips"], image: images.sunsetPeaks, href: "#plan" },
-  { title: "Heritage Walks", blurb: "Wander centuries-old stupas and palace squares with a local storyteller.", tags: ["UNESCO sites", "Old bazaars"], image: images.boudha, href: "#plan" },
-  { title: "Mountain Flights", blurb: "Fly at eye level with Everest at sunrise — no trekking boots required.", tags: ["Everest", "Sunrise"], image: images.amaDablam, href: "#plan" },
-  { title: "Monastery Stays", blurb: "Wake to chanting monks, learn to meditate and share butter tea at dawn.", tags: ["Meditation", "Butter tea"], image: images.prayerWheels, href: "#plan" },
-  { title: "Lakeside Adventures", blurb: "Paddle Phewa Lake, paraglide over Pokhara and watch the Annapurnas glow.", tags: ["Paragliding", "Kayaking"], image: images.phewaLake, href: "#plan" },
-  { title: "Wild Trails", blurb: "Quiet forest paths, red pandas and villages that rarely see visitors.", tags: ["Forests", "Wildlife"], image: images.alpineValley, href: "#plan" },
+  { title: "The Kailash Kora", blurb: "Three days and 52 km around the holy mountain, crossing the 5,630 m Dolma La with yaks and porters.", tags: ["Pilgrimage", "Dolma La"], image: images.sunsetPeaks, href: categoryHref("kailash") },
+  { title: "Helicopter Yatra", blurb: "Fly to Simikot and the Tibet border to reach Manasarovar in days — ideal for older pilgrims.", tags: ["Fastest route", "Senior-friendly"], image: images.amaDablam, href: categoryHref("kailash") },
+  { title: "Lhasa & Monasteries", blurb: "The Potala Palace, the Jokhang and debating monks at Sera, with a Tibetan guide.", tags: ["Potala Palace", "Monasteries"], image: images.prayerWheels, href: categoryHref("tibet") },
+  { title: "Overland Across Tibet", blurb: "Cross the Kerung border by Land Cruiser, over high passes and past nomad camps and turquoise lakes.", tags: ["Land Cruiser", "High passes"], image: images.everestStupa, href: categoryHref("tibet") },
+  { title: "Everest North Face", blurb: "Stand at Rongbuk, the world's highest monastery, beneath Everest's quiet northern wall.", tags: ["Rongbuk", "Base camp"], image: images.alpineValley, href: categoryHref("tibet") },
+  { title: "Tibetan Treks", blurb: "Walk between monasteries and base camps with yak support, sleeping in nomad camps along the way.", tags: ["Trekking", "Yak support"], image: images.hikers, href: categoryHref("tibet-treks") },
 ];

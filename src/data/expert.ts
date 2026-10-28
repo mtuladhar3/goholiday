@@ -5,5 +5,5 @@ export const expert = {
   role: "Founder · 20 years in the Himalaya",
   image: images.avatar2,
   quote:
-    "Whether you're wondering about the ideal season, off-the-beaten-path treasures, or the little cultural quirks that make a trip unforgettable — ask me anything. I'll plan it like it's my own.",
+    "Whether you're wondering about Tibet permits, the best month for the kora, or how to prepare for the altitude on the Dolma La — ask me anything. I'll plan your yatra like it's my own.",
 };

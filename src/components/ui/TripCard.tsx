@@ -33,12 +33,9 @@ export default function TripCard({ trip }: { trip: Trip }) {
             <MapPin className="size-3.5" />
             {trip.location} · {trip.maxAltitude.toLocaleString("en-US")} m
           </p>
-          <h3 className="mt-1.5 text-xl font-medium leading-tight tracking-tight">{trip.title}</h3>
-          <div className="mt-4 flex items-center justify-between">
-            <p className="text-sm text-white/75">
-              from <span className="text-lg font-medium text-white">${trip.price.toLocaleString("en-US")}</span>
-            </p>
-            <span className="grid size-10 place-items-center rounded-full bg-white text-ink transition-all duration-500 ease-expo group-hover:rotate-45 group-hover:bg-navy group-hover:text-white">
+          <div className="mt-1.5 flex items-center justify-between gap-3">
+            <h3 className="text-xl font-medium leading-tight tracking-tight">{trip.title}</h3>
+            <span className="grid size-10 shrink-0 place-items-center rounded-full bg-white text-ink transition-all duration-500 ease-expo group-hover:rotate-45 group-hover:bg-navy group-hover:text-white">
               <ArrowUpRight className="size-4" />
             </span>
           </div>

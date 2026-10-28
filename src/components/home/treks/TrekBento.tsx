@@ -10,9 +10,9 @@ export default function TrekBento() {
   return (
     <Section id="treks">
       <SectionHeader
-        label="Popular treks"
-        title={"Chosen by\n*thousands*"}
-        description="Our most-booked routes this season, plus one journey we can't stop talking about."
+        label="Popular in Tibet"
+        title={"Chosen by\n*pilgrims*"}
+        description="The kora and Tibetan treks travellers book most, plus one overland journey we can't stop talking about."
         action={{ href: "#trips", label: "All treks" }}
       />
 

@@ -16,6 +16,8 @@ export type TourCategory = {
   includes: string[];
   excludes: string[];
   faqs: { q: string; a: string }[];
+  /** Essential-info copy shown on every tour page in the category, as HTML (h3, p, ul/ol, a, strong). */
+  essentials: string;
 };
 
 export type ItineraryDay = {
@@ -32,6 +34,8 @@ export type Tour = {
   category: CategorySlug;
   title: string;
   tagline: string;
+  /** Overview copy as HTML (p, h3, ul/ol, a, strong). Falls back to `overviewFor` when missing. */
+  overview?: string;
   days: number;
   maxAltitude: number;
   difficulty: Difficulty;
@@ -86,6 +90,26 @@ const tibetIncludes = [
 
 const commonExcludes = ["International flights", "Travel insurance with high-altitude cover", "Tips for guides, drivers and porters", "Personal expenses and drinks", "Single supplement"];
 
+// Placeholder until the real copy arrives — replace per category.
+const essentialsPlaceholder = `
+<p>Introductory paragraph about what travellers should know before this trip. Replace this text with the real content.</p>
+<h3>Permits &amp; visas</h3>
+<p>A short paragraph explaining the documents travellers need and how long they take to arrange.</p>
+<ul>
+  <li>First requirement</li>
+  <li>Second requirement</li>
+  <li>Third requirement</li>
+</ul>
+<h3>Health &amp; altitude</h3>
+<p>A short paragraph on fitness, acclimatisation and insurance.</p>
+<h3>What to pack</h3>
+<ul>
+  <li>Packing item</li>
+  <li>Packing item</li>
+  <li>Packing item</li>
+</ul>
+`;
+
 export const tourCategories: TourCategory[] = [
   {
     slug: "kailash",
@@ -102,6 +126,7 @@ export const tourCategories: TourCategory[] = [
     ],
     includes: tibetIncludes,
     excludes: [...commonExcludes, "Horse or palanquin hire on the kora"],
+    essentials: essentialsPlaceholder,
     faqs: [
       { q: "How fit do I need to be?", a: "The kora is a high-altitude walk of 15–22 km a day. If you can hike 5–6 hours comfortably, with some preparation, you can do it. Ponies are available for those who need them." },
       { q: "When are the Tibet permits issued?", a: "We apply 20 days before departure. You'll need a passport valid for six months and a scan of it when booking." },
@@ -123,6 +148,7 @@ export const tourCategories: TourCategory[] = [
     ],
     includes: nepalIncludes,
     excludes: [...commonExcludes, "Nepal visa fee (on arrival)", "Lunch and dinner in Kathmandu and Pokhara"],
+    essentials: essentialsPlaceholder,
     faqs: [
       { q: "Do I need a visa for Nepal?", a: "Most nationalities get a visa on arrival at Kathmandu airport. 15, 30 and 90-day options are available." },
       { q: "Can I go private?", a: "Yes — every itinerary can run privately on your dates at no extra planning fee." },
@@ -143,6 +169,7 @@ export const tourCategories: TourCategory[] = [
     ],
     includes: tibetIncludes,
     excludes: commonExcludes,
+    essentials: essentialsPlaceholder,
     faqs: [
       { q: "Can I travel independently in Tibet?", a: "No — foreign travellers must be on a guided tour with permits. We handle everything." },
       { q: "Is Tibet open all year?", a: "Tibet usually closes to foreign visitors from late February to early April. We'll confirm before you book." },
@@ -162,6 +189,7 @@ export const tourCategories: TourCategory[] = [
     ],
     includes: [...tibetIncludes, "Camping equipment and camp crew"],
     excludes: [...commonExcludes, "Sleeping bag (rentable in Kathmandu)"],
+    essentials: essentialsPlaceholder,
     faqs: [{ q: "Are these treks camping?", a: "Yes — most nights are in tents with a dining tent, cook and toilet tent. A few nights are in guesthouses." }],
   },
   {
@@ -178,6 +206,7 @@ export const tourCategories: TourCategory[] = [
     ],
     includes: ["Bhutan visa and Sustainable Development Fee", "Licensed Bhutanese guide and driver", "3-star hotels or farmstays", "All meals", "Entrance fees to dzongs and museums"],
     excludes: commonExcludes,
+    essentials: essentialsPlaceholder,
     faqs: [{ q: "Why is Bhutan more expensive?", a: "Bhutan charges a daily Sustainable Development Fee that funds free healthcare and education. It's included in our price." }],
   },
 ];
@@ -945,4 +974,28 @@ export function departuresFor(tour: Tour): Departure[] {
     const status = i === 0 ? "Guaranteed" : seats <= 4 ? "Filling fast" : "Available";
     return { date: date.toISOString().slice(0, 10), status, seats, price: tour.price + (i % 3 === 2 ? 150 : 0) };
   });
+}
+
+const fitnessNote: Record<Difficulty, string> = {
+  Easy: "No previous trekking experience is needed. If you enjoy a full day of sightseeing on foot, you'll be comfortable from start to finish.",
+  Moderate: "A reasonable level of fitness is all you need. Days are active but unhurried, with time built in to rest, acclimatise and take it all in.",
+  Strenuous:
+    "This is a demanding journey, with long days at high altitude. Good fitness and some hiking experience will help you enjoy it, and our team will share a simple training plan once you book.",
+};
+
+const escapeHtml = (text: string) => text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const lowerFirst = (text: string) => text.charAt(0).toLowerCase() + text.slice(1);
+
+/** The tour's own overview copy, or one written from its facts until real copy is added. */
+export function overviewFor(tour: Tour) {
+  if (tour.overview) return tour.overview;
+  const route = tour.start === tour.end ? `starts and ends in ${tour.start}` : `runs from ${tour.start} to ${tour.end}`;
+  return [
+    tour.tagline,
+    `This ${tour.days}-day journey ${route}, climbing to a high point of ${tour.maxAltitude.toLocaleString("en-US")} m. Every day is planned around a comfortable pace, with a local guide who knows the route, the people and the stories behind each place.`,
+    `Getting around is by ${lowerFirst(tour.transport)}, with nights in ${lowerFirst(tour.accommodation)}. Groups are kept to ${tour.groupSize} travellers, so there's always room to linger, ask questions and travel at a human pace.`,
+    fitnessNote[tour.difficulty],
+  ]
+    .map((p) => `<p>${escapeHtml(p)}</p>`)
+    .join("");
 }

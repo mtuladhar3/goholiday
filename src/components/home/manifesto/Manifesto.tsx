@@ -17,7 +17,7 @@ export default function Manifesto() {
       <ScrollText
         className="type-statement mt-8 max-w-6xl"
         images={{ wheels: images.prayerWheels, peak: images.amaDablam, hikers: images.hikers }}
-        text="We don't sell tours. We open doors [wheels] — to monasteries at *dawn,* butter tea with nomads at four thousand metres, and summits [peak] that quietly *rewrite who you are.* Every journey is planned by locals, walked [hikers] by locals, and leaves the mountains a little better than we found them."
+        text="We don't sell tours. We open doors [wheels] — to monasteries at *dawn,* butter tea with nomads on the Tibetan plateau, and a kora [peak] around Kailash that quietly *rewrites who you are.* Every journey is planned by locals, walked [hikers] by locals, and leaves the mountains a little better than we found them."
       />
 
       <Reveal className="mt-20 grid gap-4 sm:grid-cols-2 lg:grid-cols-4" stagger={0.08}>

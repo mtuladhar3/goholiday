@@ -55,9 +55,9 @@ export default function Experiences() {
     <section id="experiences" ref={ref} className="scroll-mt-20 py-16 lg:py-20">
       <Container>
         <SectionHeader
-          label="Things to do"
-          title={"More than\njust a *trek*"}
-          description="Explore countries rich in culture, heritage, sacred temples and lakes — at whatever pace suits you."
+          label="Ways to travel"
+          title={"More than\njust a *kora*"}
+          description="Pilgrimage, monasteries, high passes and Everest's north face — Kailash and Tibet at whatever pace suits you."
           action={{ href: "#plan", label: "Build an itinerary" }}
         />
 

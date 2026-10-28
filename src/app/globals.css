@@ -20,6 +20,12 @@
 
   --ease-expo: cubic-bezier(0.7, 0, 0.3, 1);
 
+  --animate-progress: progress linear forwards;
+  @keyframes progress {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+
   /* Three radii only: large panels, cards, thumbnails */
   --radius-panel: 2rem;
   --radius-card: 1.5rem;

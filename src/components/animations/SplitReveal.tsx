@@ -20,7 +20,7 @@ export default function SplitReveal({ text, as: Tag = "h2", className = "", dela
     () => {
       gsap.matchMedia().add(MOTION_OK, () => {
         gsap.from(".split-word", {
-          yPercent: 110,
+          yPercent: 150,
           rotate: 4,
           duration: 1.1,
           stagger: 0.05,
@@ -39,7 +39,7 @@ export default function SplitReveal({ text, as: Tag = "h2", className = "", dela
         <span key={l} className="block">
           {tokenize(line).map((token, w) => (
             <span key={w}>
-              <span className="-mb-[0.14em] inline-block overflow-hidden pb-[0.14em] align-top">
+              <span className="-m-[0.2em] inline-block overflow-hidden p-[0.2em] align-top">
                 <span className="split-word inline-block origin-bottom-left">
                   {token.em ? <em>{token.text}</em> : token.text}
                   {token.trail}

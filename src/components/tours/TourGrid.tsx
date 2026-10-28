@@ -15,8 +15,6 @@ const durations = [
 
 const sorts = {
   recommended: { label: "Recommended", fn: () => 0 },
-  priceAsc: { label: "Price: low to high", fn: (a: Tour, b: Tour) => a.price - b.price },
-  priceDesc: { label: "Price: high to low", fn: (a: Tour, b: Tour) => b.price - a.price },
   shortest: { label: "Shortest first", fn: (a: Tour, b: Tour) => a.days - b.days },
 };
 type SortKey = keyof typeof sorts;

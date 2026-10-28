@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { tourHref, type Tour } from "@/data/tours";
-import { usd } from "@/lib/format";
 import { ArrowUpRight, MapPin } from "@/components/ui/Icons";
 
 /** Grid version of the home-page trip card: full-bleed photo with a glass info panel. */
@@ -31,12 +30,9 @@ export default function TourListCard({ tour }: { tour: Tour }) {
             <MapPin className="size-3.5" />
             {tour.location} · {tour.maxAltitude.toLocaleString("en-US")} m
           </p>
-          <h3 className="mt-1.5 text-xl font-medium leading-tight tracking-tight">{tour.title}</h3>
-          <div className="mt-4 flex items-center justify-between">
-            <p className="text-sm text-white/75">
-              from <span className="text-lg font-medium text-white">{usd(tour.price)}</span>
-            </p>
-            <span className="grid size-10 place-items-center rounded-full bg-white text-ink transition-all duration-500 ease-expo group-hover:rotate-45 group-hover:bg-navy group-hover:text-white">
+          <div className="mt-1.5 flex items-center justify-between gap-3">
+            <h3 className="text-xl font-medium leading-tight tracking-tight">{tour.title}</h3>
+            <span className="grid size-10 shrink-0 place-items-center rounded-full bg-white text-ink transition-all duration-500 ease-expo group-hover:rotate-45 group-hover:bg-navy group-hover:text-white">
               <ArrowUpRight className="size-4" />
             </span>
           </div>

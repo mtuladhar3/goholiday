@@ -58,8 +58,9 @@ export default function FeaturedTrips() {
     <section id="trips" ref={section} className="relative scroll-mt-20 overflow-hidden py-16 lg:flex lg:h-svh lg:flex-col lg:justify-center lg:py-0">
       <Container className="lg:pt-16">
         <SectionHeader
-          label="Featured journeys"
-          title="Trips worth the *altitude*"
+          as="h1"
+          label="Kailash & Tibet journeys"
+          title="Journeys to the *sacred* mountain"
           aside={
             <div className="flex items-center gap-4">
               <div className="hidden h-px w-32 bg-mist lg:block">

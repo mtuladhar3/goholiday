@@ -1,13 +1,12 @@
 "use client";
 
-import Image from "next/image";
 import { useState } from "react";
 import type { ItineraryDay } from "@/data/tours";
 import { metres } from "@/lib/format";
-import { ArrowRight, Bed, ChevronDown, Gauge, MapPin } from "@/components/ui/Icons";
+import { ArrowRight, ChevronDown } from "@/components/ui/Icons";
 
-/** Day-by-day timeline; each day opens into a card with its photo, altitude change and overnight stay. */
-export default function Itinerary({ days, photos }: { days: ItineraryDay[]; photos: string[] }) {
+/** Day-by-day timeline; each day opens to its description. */
+export default function Itinerary({ days }: { days: ItineraryDay[] }) {
   const [open, setOpen] = useState<Set<number>>(() => new Set([0]));
   const allOpen = open.size === days.length;
   const peak = Math.max(...days.map((d) => d.altitude));
@@ -46,7 +45,6 @@ export default function Itinerary({ days, photos }: { days: ItineraryDay[]; phot
         <span className="absolute bottom-8 left-[1.6rem] top-8 hidden w-px bg-mist sm:block" aria-hidden />
         {days.map((d, i) => {
           const expanded = open.has(i);
-          const change = i ? d.altitude - days[i - 1].altitude : 0;
           const isPeak = d.altitude === peak;
           return (
             <li key={i} className="relative flex gap-4">
@@ -79,34 +77,9 @@ export default function Itinerary({ days, photos }: { days: ItineraryDay[]; phot
                 <div className={`grid transition-[grid-template-rows] duration-700 ease-expo ${expanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
                   <div className="min-h-0 overflow-hidden">
                     <div className={`border-t border-mist transition-opacity duration-500 ${expanded ? "opacity-100 delay-150" : "opacity-0"}`}>
-                      <div className="grid gap-5 p-5 md:grid-cols-[1fr_220px]">
+                      <div className="p-5">
                         <div className="flex flex-col">
                           <p className="text-base leading-relaxed">{d.text}</p>
-
-                          <dl className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3">
-                            <div className="rounded-thumb bg-paper p-3">
-                              <dt className="flex items-center gap-1.5 text-[11px] uppercase tracking-[0.12em] text-stone">
-                                <Gauge className="size-3.5" />
-                                Altitude
-                              </dt>
-                              <dd className="mt-1 font-medium tabular-nums">{metres(d.altitude)}</dd>
-                            </div>
-                            <div className="rounded-thumb bg-paper p-3">
-                              <dt className="text-[11px] uppercase tracking-[0.12em] text-stone">{change < 0 ? "Descent" : "Ascent"}</dt>
-                              <dd className={`mt-1 flex items-center gap-1 font-medium tabular-nums ${change > 0 ? "text-saffron" : change < 0 ? "text-navy" : ""}`}>
-                                {change === 0 ? "—" : `${change > 0 ? "▲" : "▼"} ${metres(Math.abs(change))}`}
-                              </dd>
-                            </div>
-                            {d.stay && (
-                              <div className="col-span-2 rounded-thumb bg-paper p-3 sm:col-span-1">
-                                <dt className="flex items-center gap-1.5 text-[11px] uppercase tracking-[0.12em] text-stone">
-                                  <Bed className="size-3.5" />
-                                  Overnight
-                                </dt>
-                                <dd className="mt-1 font-medium">{d.stay}</dd>
-                              </div>
-                            )}
-                          </dl>
 
                           <div className="mt-auto flex items-center gap-4 pt-5">
                             <span className="h-1 flex-1 overflow-hidden rounded-full bg-mist" aria-hidden>
@@ -130,13 +103,6 @@ export default function Itinerary({ days, photos }: { days: ItineraryDay[]; phot
                           </div>
                         </div>
 
-                        <figure className="relative aspect-[4/3] overflow-hidden rounded-thumb bg-paper-deep md:aspect-auto md:min-h-48">
-                          <Image src={photos[i % photos.length]} alt="" fill sizes="(min-width: 768px) 220px, 90vw" className="object-cover" />
-                          <figcaption className="glass absolute inset-x-2 bottom-2 flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-white">
-                            <MapPin className="size-3.5" />
-                            {d.place}
-                          </figcaption>
-                        </figure>
                       </div>
                     </div>
                   </div>

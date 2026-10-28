@@ -16,7 +16,7 @@ export default function Testimonials() {
       <Container>
         <SectionHeader
           label="Client reviews"
-          title={"Loved by\n*travellers*"}
+          title={"Loved by\n*pilgrims*"}
           aside={
             <div className="flex items-end gap-4">
               <p className="type-stat">4.9</p>
@@ -26,7 +26,7 @@ export default function Testimonials() {
               </div>
             </div>
           }
-          description="Real words from travellers who walked the Himalaya with us — unedited, from Tripadvisor and Google."
+          description="Real words from travellers who circled Kailash and crossed Tibet with us — unedited, from Tripadvisor and Google."
           action={{ href: "#plan", label: "Start your story" }}
         />
       </Container>

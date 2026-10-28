@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { useRef, useState } from "react";
 import { gsap, useGSAP, MOTION_OK } from "@/lib/gsap";
-import { onIntro } from "@/lib/intro";
 import { tokenize } from "@/lib/emphasis";
 import { heroSlides } from "@/data/heroSlides";
 import Button from "@/components/ui/Button";
@@ -38,7 +37,7 @@ export default function HeroSlider() {
     if (!window.matchMedia(MOTION_OK).matches) return done();
     gsap
       .timeline({ onComplete: done })
-      .to(ref.current?.querySelectorAll(".hs-word") ?? [], { yPercent: -110, duration: 0.5, stagger: 0.025, ease: "power3.in" })
+      .to(ref.current?.querySelectorAll(".hs-word") ?? [], { yPercent: -150, duration: 0.5, stagger: 0.025, ease: "power3.in" })
       .to(ref.current?.querySelectorAll(".hs-swap") ?? [], { autoAlpha: 0, y: -12, duration: 0.35 }, 0);
   };
 
@@ -46,14 +45,13 @@ export default function HeroSlider() {
   useGSAP(
     () => {
       gsap.matchMedia().add(MOTION_OK, () => {
-        const fade = gsap.from(".hs-fade", { y: 30, autoAlpha: 0, duration: 1.2, stagger: 0.1, ease: "power4.out", paused: true, delay: 0.5 });
-        const off = onIntro(() => fade.play());
+        gsap.from(".hs-fade", { y: 30, autoAlpha: 0, duration: 1.2, stagger: 0.1, ease: "power4.out", delay: 0.5 });
 
         const scrollTrigger = { trigger: ref.current, start: "top top", end: "bottom top", scrub: true };
         gsap.to(".hs-media", { yPercent: 20, ease: "none", scrollTrigger });
         gsap.to(".hs-content", { yPercent: -15, autoAlpha: 0, ease: "none", scrollTrigger: { ...scrollTrigger, end: "70% top" } });
 
-        if (!window.matchMedia("(pointer: fine)").matches) return off;
+        if (!window.matchMedia("(pointer: fine)").matches) return;
         const xTo = gsap.quickTo(".hs-parallax", "x", { duration: 1.2, ease: "power3.out" });
         const yTo = gsap.quickTo(".hs-parallax", "y", { duration: 1.2, ease: "power3.out" });
         const move = (e: PointerEvent) => {
@@ -61,10 +59,7 @@ export default function HeroSlider() {
           yTo((e.clientY / window.innerHeight - 0.5) * -20);
         };
         window.addEventListener("pointermove", move);
-        return () => {
-          off();
-          window.removeEventListener("pointermove", move);
-        };
+        return () => window.removeEventListener("pointermove", move);
       });
     },
     { scope: ref },
@@ -86,15 +81,15 @@ export default function HeroSlider() {
         return;
       }
 
-      const reveal = gsap
-        .timeline({ paused: true })
+      gsap
+        .timeline()
         .fromTo(
           strips,
           { clipPath: (i: number) => (i % 2 ? "inset(100% 0% 0% 0%)" : "inset(0% 0% 100% 0%)") },
           { clipPath: "inset(0% 0% 0% 0%)", duration: 1.3, stagger: 0.07, ease: "expo.inOut" },
         )
         .fromTo(el.querySelectorAll(".hs-strip-inner"), { scale: 1.25 }, { scale: 1, duration: 2.4, ease: "expo.out" }, 0.2)
-        .fromTo(".hs-word", { yPercent: 110, rotate: 3 }, { yPercent: 0, rotate: 0, duration: 1.1, stagger: 0.05, ease: "power4.out" }, 0.55)
+        .fromTo(".hs-word", { yPercent: 150, rotate: 3 }, { yPercent: 0, rotate: 0, duration: 1.1, stagger: 0.05, ease: "power4.out" }, 0.55)
         .fromTo(".hs-swap", { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.8, stagger: 0.06, ease: "power3.out" }, 0.75)
         .add(() => {
           timer.current = gsap.fromTo(
@@ -103,8 +98,6 @@ export default function HeroSlider() {
             { scaleX: 1, duration: AUTOPLAY, ease: "none", onComplete: () => go(index + 1) },
           );
         }, 0.8);
-
-      return onIntro(() => reveal.play());
     },
     { scope: ref, dependencies: [index] },
   );
@@ -140,10 +133,10 @@ export default function HeroSlider() {
               {slide.location}
             </p>
 
-            <h1 key={index} className="type-hero">
+            <h2 key={index} className="type-hero">
               {tokenize(slide.title).map((t, i) => (
                 <span key={i}>
-                  <span className="-mb-[0.14em] inline-block overflow-hidden pb-[0.14em] align-top">
+                  <span className="-m-[0.2em] inline-block overflow-hidden p-[0.2em] align-top">
                     <span className="hs-word inline-block origin-bottom-left">
                       {t.em ? <em className="text-saffron">{t.text}</em> : t.text}
                       {t.trail}
@@ -151,7 +144,7 @@ export default function HeroSlider() {
                   </span>{" "}
                 </span>
               ))}
-            </h1>
+            </h2>
 
             <p className="hs-swap mt-6 max-w-lg text-base leading-relaxed text-white/80 sm:text-lg">{slide.description}</p>
             <div className="hs-swap mt-8 flex flex-wrap gap-3">
@@ -165,11 +158,10 @@ export default function HeroSlider() {
           </div>
 
           <aside className="hs-fade hidden w-80 flex-col gap-3 lg:flex">
-            <dl className="glass grid grid-cols-3 rounded-card p-5">
+            <dl className="glass grid grid-cols-2 rounded-card p-5">
               {[
                 ["Days", slide.days],
                 ["Max alt.", `${slide.altitude.toLocaleString("en-US")}m`],
-                ["From", `$${slide.price.toLocaleString("en-US")}`],
               ].map(([label, value]) => (
                 <div key={label} className="hs-swap">
                   <dt className="text-[11px] uppercase tracking-[0.15em] text-white/60">{label}</dt>

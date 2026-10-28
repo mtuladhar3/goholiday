@@ -12,7 +12,6 @@ export const site = {
   phones: ["+977 1-4000000", "+977 9800000000"],
   whatsapp: "+977 9800000000",
   address: ["Kamaladi Marg, Kamaladi", "Kathmandu 44600, Nepal"],
-  coordinates: "27°42′N  85°19′E",
   founded: 2010,
   copyrightYear: 2026,
 };
@@ -77,10 +76,11 @@ export const footerColumns = [
   {
     title: "Explore",
     links: [
-      { label: "Nepal", href: categoryHref("nepal") },
-      { label: "Tibet", href: categoryHref("tibet") },
-      { label: "Bhutan", href: categoryHref("bhutan") },
       { label: "Kailash", href: categoryHref("kailash") },
+      { label: "Tibet", href: categoryHref("tibet") },
+      { label: "Tibet treks", href: categoryHref("tibet-treks") },
+      { label: "Nepal", href: categoryHref("nepal") },
+      { label: "Bhutan", href: categoryHref("bhutan") },
       { label: "Trip of the month", href: anchors.treks },
     ],
   },

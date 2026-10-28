@@ -10,14 +10,7 @@ export type Review = {
 };
 
 export const reviews: Review[] = [
-  {
-    name: "Sarah Mitchell",
-    country: "Australia",
-    rating: 5,
-    text: "Every detail, from permits to teahouses, was handled perfectly. Our guide was the most delightful and insightful companion.",
-    avatar: images.avatar1,
-    trip: "Everest Base Camp",
-  },
+  // Kailash and Tibet reviews lead.
   {
     name: "Daniel Okafor",
     country: "United Kingdom",
@@ -27,20 +20,28 @@ export const reviews: Review[] = [
     trip: "Mt. Kailash Kora",
   },
   {
-    name: "Elena García",
-    country: "Spain",
-    rating: 5,
-    text: "Kathmandu's heritage sites came alive with our guide's stories. Small group, flexible schedule, genuinely warm people.",
-    avatar: images.avatar3,
-    trip: "Kathmandu Heritage",
-  },
-  {
     name: "James Carter",
     country: "USA",
     rating: 5,
     text: "Overland from Kathmandu to Lhasa was spectacular. Smooth border crossing and fantastic stays along the way.",
     avatar: images.avatar2,
     trip: "Kathmandu to Lhasa",
+  },
+  {
+    name: "Sarah Mitchell",
+    country: "Australia",
+    rating: 5,
+    text: "Every detail, from permits to teahouses, was handled perfectly. Our guide was the most delightful and insightful companion.",
+    avatar: images.avatar1,
+    trip: "Everest Base Camp",
+  },
+  {
+    name: "Elena García",
+    country: "Spain",
+    rating: 5,
+    text: "Kathmandu's heritage sites came alive with our guide's stories. Small group, flexible schedule, genuinely warm people.",
+    avatar: images.avatar3,
+    trip: "Kathmandu Heritage",
   },
   {
     name: "Mia Schneider",
