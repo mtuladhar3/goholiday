@@ -1,4 +1,5 @@
 import { categoryHref, findTour, tourHref } from "./tours";
+import { companyPages } from "./company";
 import nepalGovernment from "../../public/partners/nepal.png";
 import ntb from "../../public/partners/ntb.png";
 import taan from "../../public/partners/taan.png";
@@ -16,7 +17,7 @@ export const site = {
   copyrightYear: 2026,
 };
 
-/** Every home-page target the site links to. `plan` and `contact` exist on every page, so they stay page-local. */
+/** Every home-page target the site links to. `plan` exists on every page, so it stays page-local. */
 export const anchors = {
   destinations: "/#destinations",
   trips: "/#trips",
@@ -26,12 +27,11 @@ export const anchors = {
   journal: "/#journal",
   plan: "#plan",
   reviews: "/#reviews",
-  contact: "#contact",
+  contact: "/contact",
 };
 
 export type NavLink = { label: string; href: string; children?: { label: string; href: string }[] };
 
-// Company pages don't exist yet — they point at the closest home-page section until they do.
 export const navLinks: NavLink[] = [
   { label: "Home", href: "/" },
   {
@@ -59,15 +59,8 @@ export const navLinks: NavLink[] = [
   { label: "Bhutan Tours", href: categoryHref("bhutan") },
   {
     label: "Company",
-    href: anchors.why,
-    children: [
-      { label: "About Us", href: anchors.why },
-      { label: "Our Team", href: anchors.plan },
-      { label: "Legal Documents", href: "#" },
-      { label: "Why Travel with Go Holiday?", href: anchors.why },
-      { label: "Payment Options", href: "#" },
-      { label: "Terms & Conditions", href: "#" },
-    ],
+    href: companyPages[0].href,
+    children: companyPages.map(({ label, href }) => ({ label, href })),
   },
   { label: "Contact", href: anchors.contact },
 ];
@@ -82,15 +75,19 @@ export const footerColumns = [
       { label: "Nepal", href: categoryHref("nepal") },
       { label: "Bhutan", href: categoryHref("bhutan") },
       { label: "Trip of the month", href: anchors.treks },
+      { label: "Reserve a trip", href: "/book" },
     ],
   },
   {
     title: "Company",
     links: [
-      { label: "Why travel with us", href: anchors.why },
-      { label: "Talk to an expert", href: anchors.plan },
-      { label: "Reviews", href: anchors.reviews },
-      { label: "Journal", href: anchors.journal },
+      { label: "About us", href: "/about" },
+      { label: "Our team", href: "/team" },
+      { label: "Why travel with us", href: "/why-travel-with-us" },
+      { label: "Payment options", href: "/payment-options" },
+      { label: "Legal documents", href: "/legal-documents" },
+      { label: "Terms & conditions", href: "/terms-and-conditions" },
+      { label: "Contact us", href: "/contact" },
     ],
   },
 ];

@@ -34,7 +34,7 @@ export default function MostBooked() {
       onBlur={() => setPaused(false)}
       aria-hidden={!shown}
       inert={!shown}
-      className={`fixed bottom-4 left-4 z-30 w-64 overflow-hidden rounded-2xl bg-ink/95 text-paper shadow-[0_20px_40px_-12px] shadow-ink/50 ring-1 ring-white/10 backdrop-blur-md transition-[opacity,translate,filter,visibility] duration-700 ease-expo sm:bottom-6 sm:left-6 ${
+      className={`fixed bottom-4 left-4 z-30 hidden w-64 sm:block overflow-hidden rounded-2xl bg-ink/95 text-paper shadow-[0_20px_40px_-12px] shadow-ink/50 ring-1 ring-white/10 backdrop-blur-md transition-[opacity,translate,filter,visibility] duration-700 ease-expo sm:bottom-6 sm:left-6 ${
         shown ? "visible opacity-100" : "invisible translate-y-10 opacity-0 blur-md"
       }`}
     >

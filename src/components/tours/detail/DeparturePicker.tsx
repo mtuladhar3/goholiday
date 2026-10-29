@@ -3,32 +3,14 @@
 import { useEffect, useRef, useState } from "react";
 import type { Departure } from "@/data/tours";
 import { longDate } from "@/lib/format";
+import { WEEKDAYS, monthGrid, monthKey, monthLabel, shiftMonth } from "@/lib/calendar";
 import { ArrowLeft, ArrowRight, Calendar, ChevronDown } from "@/components/ui/Icons";
-
-const WEEKDAYS = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
 
 const statusDot: Record<Departure["status"], string> = {
   Guaranteed: "bg-navy",
   "Filling fast": "bg-saffron",
   Available: "bg-stone/50",
 };
-
-// Dates are ISO strings pinned to UTC so server and client render the same month.
-const monthKey = (iso: string) => iso.slice(0, 7);
-const shiftMonth = (key: string, by: number) => {
-  const d = new Date(`${key}-01T00:00:00Z`);
-  d.setUTCMonth(d.getUTCMonth() + by);
-  return d.toISOString().slice(0, 7);
-};
-const monthLabel = (key: string) => new Date(`${key}-01T00:00:00Z`).toLocaleDateString("en-GB", { month: "long", year: "numeric", timeZone: "UTC" });
-
-/** Days of the month as ISO strings, padded with nulls so the 1st lands on its weekday (Monday first). */
-function monthGrid(key: string) {
-  const first = new Date(`${key}-01T00:00:00Z`);
-  const lead = (first.getUTCDay() + 6) % 7;
-  const total = new Date(Date.UTC(first.getUTCFullYear(), first.getUTCMonth() + 1, 0)).getUTCDate();
-  return [...Array<null>(lead).fill(null), ...Array.from({ length: total }, (_, i) => `${key}-${String(i + 1).padStart(2, "0")}`)];
-}
 
 type DeparturePickerProps = {
   departures: Departure[];

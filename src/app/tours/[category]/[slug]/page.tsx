@@ -127,7 +127,7 @@ async function TourContent({ params }: { params: Params }) {
         </div>
 
         <aside className="lg:sticky lg:top-32 lg:self-start">
-          <BookingCard rating={tour.rating} reviews={tour.reviews} />
+          <BookingCard slug={tour.slug} rating={tour.rating} reviews={tour.reviews} />
         </aside>
       </Container>
 

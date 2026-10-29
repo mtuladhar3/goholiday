@@ -199,6 +199,46 @@ export const Quote = (p: IconProps) => (
   </svg>
 );
 
+export const Bank = (p: IconProps) => (
+  <svg {...base(p)}>
+    <path d="M3 9.5 12 4l9 5.5M4.5 20h15M6 10.5V17M10 10.5V17M14 10.5V17M18 10.5V17" />
+  </svg>
+);
+
+export const CreditCard = (p: IconProps) => (
+  <svg {...base(p)}>
+    <rect x="3" y="5.5" width="18" height="13" rx="2.5" />
+    <path d="M3 10h18M7 15h3" />
+  </svg>
+);
+
+export const Globe = (p: IconProps) => (
+  <svg {...base(p)}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="M3 12h18M12 3c2.5 2.7 3.5 5.7 3.5 9s-1 6.3-3.5 9c-2.5-2.7-3.5-5.7-3.5-9s1-6.3 3.5-9" />
+  </svg>
+);
+
+export const Rupee = (p: IconProps) => (
+  <svg {...base(p)}>
+    <path d="M7 4.5h10M7 9h10M10 4.5c5 0 5 9 0 9H7l7.5 7" />
+  </svg>
+);
+
+export const Copy = (p: IconProps) => (
+  <svg {...base(p)}>
+    <rect x="8.5" y="8.5" width="12" height="12" rx="2.5" />
+    <path d="M15.5 8.5v-3a2 2 0 0 0-2-2h-8a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h3" />
+  </svg>
+);
+
+export const Chat = (p: IconProps) => (
+  <svg {...base(p)}>
+    <path d="M4 19.5 5.3 16A8 8 0 1 1 8 18.7z" />
+    <path d="M9 10.5h6M9 13.5h4" />
+  </svg>
+);
+
 const brand = (p: IconProps) => base({ fill: "currentColor", stroke: "none", width: 16, height: 16, ...p });
 
 export const SocialIcons = {

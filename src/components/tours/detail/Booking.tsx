@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import type { Departure } from "@/data/tours";
 import { longDate } from "@/lib/format";
@@ -35,8 +36,9 @@ export function BookingProvider({ departures, children }: { departures: Departur
   );
 }
 
-export function BookingCard({ rating, reviews }: { rating: number; reviews: number }) {
+export function BookingCard({ slug, rating, reviews }: { slug: string; rating: number; reviews: number }) {
   const b = useBooking();
+  const date = b.selected >= 0 ? b.departures[b.selected].date : "private";
 
   return (
     <div id="book" className="scroll-mt-32 rounded-card border border-mist bg-white p-5 sm:p-6">
@@ -83,15 +85,15 @@ export function BookingCard({ rating, reviews }: { rating: number; reviews: numb
         </div>
       </div>
 
-      <a
-        href="#plan"
+      <Link
+        href={`/book?tour=${slug}&date=${date}&travellers=${b.travellers}`}
         className="group mt-5 flex items-center justify-between rounded-full bg-navy py-1.5 pl-6 pr-1.5 text-sm font-medium text-white transition-colors hover:bg-saffron"
       >
         {b.selected >= 0 ? "Reserve this departure" : "Request a private trip"}
         <span className="grid size-10 place-items-center rounded-full bg-white text-navy transition-[rotate,background-color] duration-500 ease-expo group-hover:rotate-45 group-hover:bg-gold">
           <ArrowUpRight className="size-4" />
         </span>
-      </a>
+      </Link>
       <a
         href={`tel:${site.whatsapp}`}
         className="group mt-2 flex items-center justify-between rounded-full border border-mist py-1.5 pl-6 pr-1.5 text-sm font-medium transition-colors hover:border-navy hover:text-navy"
